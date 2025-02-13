@@ -1,0 +1,31 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: shorturl
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./migrations/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d shorturl"]
+      interval: 5s
+      retries: 5
+      start_period: 5s
+
+  app:
+    build: .
+    environment:
+      - DB_TYPE=memory
+      - DATABASE_URL=postgres://user:password@db:5432/shorturl?sslmode=disable
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+
+volumes:
+  db_data:
