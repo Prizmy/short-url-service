@@ -19,7 +19,7 @@ services:
   app:
     build: .
     environment:
-      - DB_TYPE=memory
+      - DB_TYPE=postgres
       - DATABASE_URL=postgres://user:password@db:5432/shorturl?sslmode=disable
     depends_on:
       db:
