@@ -9,7 +9,6 @@ import (
 
 func PostHandler(storage storage.Storage) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-
 		if r.Method != http.MethodPost {
 			http.Error(w, "Invalid method, expected POST", http.StatusMethodNotAllowed)
 			return
