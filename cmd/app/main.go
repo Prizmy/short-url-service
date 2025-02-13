@@ -10,7 +10,6 @@ import (
 )
 
 func main() {
-	// Получаем тип хранилища из флага или переменной окружения
 	dbType := flag.String("db", os.Getenv("DB_TYPE"), "Choose storage: 'memory' or 'postgres'")
 	flag.Parse()
 
